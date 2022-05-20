@@ -63,6 +63,7 @@ jobs:
           echo "Copying new charts to the website directory"
           [ -d src/docs/static/ ] || mkdir "src/docs/static"
           for d in temp/* ; do
+              echo "  $d"
               cp $d src/docs/static/
           done
 
