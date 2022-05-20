@@ -76,6 +76,7 @@ jobs:
 
           echo "Copying index file into src directory"
           [ -d ../src/docs/data/ ] || mkdir "../src/docs/data"
+          [ -d ../src/docs/static/ ] || mkdir "../src/docs/static"
           cp index.yaml ../src/docs/data/charts.yml
           cp index.yaml ../src/docs/static/index.yaml
 
