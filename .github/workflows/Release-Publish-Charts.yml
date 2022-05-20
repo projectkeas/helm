@@ -75,6 +75,7 @@ jobs:
           helm repo index --url "https://raw.githubusercontent.com/projectkeas/helm/gh-pages" --merge ../dest/index.yaml .
 
           echo "Copying index file into src directory"
+          [ -d ../src/docs/data/ ] || mkdir "../src/docs/data"
           cp index.yaml ../src/docs/data/charts.yml
           cp index.yaml ../src/docs/static/index.yaml
 
