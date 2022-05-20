@@ -27,6 +27,7 @@ jobs:
         with:
           path: 'dest'
           ref: 'gh-pages'
+          fetch-depth: 0
 
       # Dependency installation
       - name: Install Helm
@@ -79,7 +80,8 @@ jobs:
         shell: bash
         run: |
           echo "Building website..."
-          hugo -s src/docs -d dest/
+          hugo -s src/docs -d dest
+          ls dest/
       
       - name: Check For New Files
         id: newFiles
