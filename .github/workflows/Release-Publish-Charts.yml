@@ -57,15 +57,23 @@ jobs:
               fi
           done
 
-          echo "Creating new Helm index..."
-          helm repo index --url "https://raw.githubusercontent.com/projectkeas/helm/gh-pages" --merge ../dest/index.yaml .
-
           echo "Copying new charts to the website directory"
           [ -d src/docs/static/ ] || mkdir "src/docs/static"
           for d in temp/* ; do
               echo "  $d"
               cp $d src/docs/static/
           done
+
+      - name: Generate new helm index
+        working-directory: temp
+        shell: bash
+        run: |
+          echo "Creating new Helm index..."
+          helm repo index --url "https://raw.githubusercontent.com/projectkeas/helm/gh-pages" --merge ../dest/index.yaml .
+
+          echo "Copying index file into src directory"
+          cp index.yaml ../src/docs/data/charts.yml
+          cp index.yaml ../src/docs/static/index.yaml
 
       - name: Publish Website
         shell: bash
@@ -81,11 +89,6 @@ jobs:
           git status --porcelain | wc -l
           if [[ $(git status --porcelain | wc -l) -gt 0 ]]; then
             echo "::set-output name=hasNewFiles::true"
-
-            helm repo index . --url $ARTEFACT_URL
-
-            echo "Copying index file into src directory"
-            cp index.yaml ../src/docs/data/charts.yml
           else
             echo "::set-output name=hasNewFiles::false"
           fi
