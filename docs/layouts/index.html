@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Project Keas - Helm Charts</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
+    <style>
+        body,
+        html {
+            height: 100%;
+            font-family: 'Open Sans', sans-serif;;
+            background-color: #cacaca;
+        }
+
+        #wrapper {
+            border-radius: 1em 1em 0 0;
+            margin: 5% auto;
+            width: 80%;
+            padding: 5em;
+
+            background-color: #fefefe;
+        }
+
+        a {
+            margin: 0;
+            transition: all .4s;
+            -webkit-transition: all .4s;
+            -o-transition: all .4s;
+            -moz-transition: all .4s
+        }
+
+        a:focus {
+            outline: none !important
+        }
+
+        a:hover {
+            text-decoration: none
+        }
+
+        table {
+            border-spacing: 1;
+            border-collapse: collapse;
+            background: #fff;
+            border-radius: 1em;
+            overflow: hidden;
+            width: 100%;
+            margin: 0 auto;
+            position: relative
+        }
+
+        table * {
+            position: relative
+        }
+
+        table td,
+        table th {
+            padding: 0.75em 1em
+        }
+
+        table thead tr {
+            height: 60px;
+            background: #aeaeae
+        }
+
+        table tbody tr {
+            height: 50px
+        }
+
+        table td,
+        table th {
+            text-align: left
+        }
+
+        table td.l,
+        table th.l {
+            text-align: right
+        }
+
+        table td.c,
+        table th.c {
+            text-align: center
+        }
+
+        table td.r,
+        table th.r {
+            text-align: center
+        }
+
+        tbody tr:nth-child(even) {
+            background-color: #f5f5f5
+        }
+
+        tbody tr {
+            font-family: OpenSans-Regular;
+            color: gray;
+            line-height: 1.2;
+            font-weight: unset
+        }
+
+        tbody tr:hover {
+            color: #555;
+            background-color: #f5f5f5;
+            cursor: pointer
+        }
+    </style>
+
+</head>
+
+<body>
+    <section id="wrapper">
+        <H1>Project Keas - Helm Charts</H1>
+
+        {{ range $key, $value := .Site.Data.charts.entries }}
+
+        <h2>{{ $key }}</h2>
+
+        <table>
+            <thead>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Chart Version</th>
+                <th>App Version</th>
+                <th>Digest</th>
+            </thead>
+
+            {{ range $value }}
+            <tr>
+                <td>{{ .name }}</td>
+                <td>{{ .description }}</td>
+                <td>{{ .version }}</td>
+                <td>{{ .appVersion }}</td>
+                <td>{{ .digest }}</td>
+            </tr>
+            {{ end }}
+
+        </table>
+        {{ end }}
+    </section>
+</body>
+
+</html>

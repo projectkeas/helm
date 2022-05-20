@@ -1,0 +1,14 @@
+apiVersion: v1
+entries:
+  receiver-gitlab:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2022-05-20T16:11:09.4904691+01:00"
+    description: A Helm chart for Kubernetes
+    digest: 066481fb9ff688630d9ce25474092ccdf80a0c6beeb5cd7c0da91e03d13ff80c
+    name: receiver-gitlab
+    type: application
+    urls:
+    - https://raw.githubusercontent.com/projectkeas/helm/gh-pages/receiver-gitlab-0.1.0.tgz
+    version: 0.1.0
+generated: "2022-05-20T16:11:09.489469+01:00"

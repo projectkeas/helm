@@ -1,0 +1,100 @@
+name: Release Helm Charts
+
+# Do not change this - otherwise pushes will fail with concurrent runs
+concurrency: release-helm
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    env:
+      ARTEFACT_URL: https://raw.githubusercontent.com/projectkeas/helm/gh-pages/
+    steps:
+      # Checkout both the main branch and the gh-pages branch.
+      # We will use the main branch to deploy the hugo site into gh-pages branch automatically
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          path: 'src'
+          fetch-depth: 0
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          path: 'dest'
+          ref: 'gh-pages'
+
+      # Dependency installation
+      - name: Install Helm
+        uses: azure/setup-helm@v1
+      - name: Setup Hugo
+        uses: peaceiris/actions-hugo@v2
+        with:
+          hugo-version: 'latest'
+          extended: true
+
+      - name: Package Helm Charts
+        shell: bash
+        run: |
+          echo "Ensuring dependencies..."
+          find src/charts/ -type f -name 'Chart.yaml' | sed -r 's|/[^/]+$||' | sort | uniq | xargs -L 1 helm dep up
+                   
+          echo "Packing charts..."
+          for d in src/charts/*/ ; do
+              echo "  $d"
+              helm package "$d" -u -d temp/
+          done
+
+          echo "Checking to see which charts already exist..."
+          for d in temp/*.tgz ; do
+              if test -f "dest/${d:5}"; then
+                  echo "  ${d:5} already exists removing..."
+                  rm $d
+              fi
+          done
+
+          echo "Creating new Helm index..."
+          helm repo index --url "https://raw.githubusercontent.com/projectkeas/helm/gh-pages" --merge ../dest/index.yaml .
+
+          echo "Copying new charts to the website directory"
+          for d in temp/* ; do
+              cp $d src/docs/static/
+          done
+
+      - name: Publish Website
+        shell: bash
+        run: |
+          echo "Building website..."
+          hugo -s src/docs -d dest/
+      
+      - name: Check For New Files
+        id: newFiles
+        shell: bash
+        working-directory: dest
+        run: |
+          git status --porcelain | wc -l
+          if [[ $(git status --porcelain | wc -l) -gt 0 ]]; then
+            echo "::set-output name=hasNewFiles::true"
+
+            helm repo index . --url $ARTEFACT_URL
+
+            echo "Copying index file into src directory"
+            cp index.yaml ../src/docs/data/charts.yml
+          else
+            echo "::set-output name=hasNewFiles::false"
+          fi
+
+      - name: Push New Files
+        if: ${{ steps.newFiles.outputs.hasNewFiles == 'true' }}
+        shell: bash
+        working-directory: dest
+        run: |
+          git config user.name "Github Actions"
+          git config user.email "actions@github.com"
+          git add .
+          git commit -m "Updated from ref: $GITHUB_SHA"
+          git push
