@@ -80,7 +80,7 @@ jobs:
         shell: bash
         run: |
           echo "Building website..."
-          hugo -s src/docs -d dest
+          hugo -s src/docs -d ../../dest
           ls dest/
       
       - name: Check For New Files
