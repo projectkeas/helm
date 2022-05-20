@@ -18,12 +18,12 @@ jobs:
       # Checkout both the main branch and the gh-pages branch.
       # We will use the main branch to deploy the hugo site into gh-pages branch automatically
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           path: 'src'
           fetch-depth: 0
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           path: 'dest'
           ref: 'gh-pages'
