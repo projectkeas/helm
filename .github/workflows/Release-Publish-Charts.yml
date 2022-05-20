@@ -92,6 +92,7 @@ jobs:
         shell: bash
         working-directory: dest
         run: |
+          git add -A
           git status --porcelain | wc -l
           if [[ $(git status --porcelain | wc -l) -gt 0 ]]; then
             echo "::set-output name=hasNewFiles::true"
@@ -106,7 +107,5 @@ jobs:
         run: |
           git config user.name "Github Actions"
           git config user.email "actions@github.com"
-          git add $(git ls-files -o --exclude-standard)
-          git add index.yaml
           git commit -m "Updated from ref: $GITHUB_SHA"
           git push
