@@ -59,11 +59,13 @@ jobs:
           done
 
           echo "Copying new charts to the website directory"
-          [ -d src/docs/static/ ] || mkdir "src/docs/static"
-          for d in temp/* ; do
-              echo "  $d"
-              cp $d src/docs/static/
-          done
+          if [[ $(ls -1q temp/* | wc -l) -gt 0 ]]; then
+            [ -d src/docs/static/ ] || mkdir "src/docs/static"
+            for d in temp/* ; do
+                echo "  $d"
+                cp $d src/docs/static/
+            done
+          fi 
 
       - name: Generate new helm index
         working-directory: temp
