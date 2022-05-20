@@ -100,6 +100,7 @@ jobs:
         run: |
           git config user.name "Github Actions"
           git config user.email "actions@github.com"
-          git add .
+          git add $(git ls-files -o --exclude-standard)
+          git add index.yaml
           git commit -m "Updated from ref: $GITHUB_SHA"
           git push
