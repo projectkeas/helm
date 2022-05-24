@@ -16,7 +16,7 @@ jobs:
         working-directory: charts
         run: |
           lint_regex="\[(.*)\] ([^ ]*): (.*)"
-          for path in charts/* ; do
+          for path in ./* ; do
               [[ -f "$path/Chart.yaml" ]] || continue;
 
               echo "::group::$path"
