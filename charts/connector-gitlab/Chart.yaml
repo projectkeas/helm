@@ -1,0 +1,19 @@
+apiVersion: v2
+name: connector-gitlab
+description: Deploys the Gitlab connector for Project Keas
+type: application
+kubeVersion: '>= 1.20.0'
+keywords:
+  - keas
+  - connector
+  - gitlab
+home: https://github.com/projectkeas/connector-gitlab
+sources:
+  - https://github.com/projectkeas/connector-gitlab
+  - https://github.com/projectkeas/helm/tree/main/charts/connector-gitlab
+deprecated: false
+version: 0.0.1
+appVersion: "0.0.1"
+annotations:
+  artifacthub.io/prerelease: 'true'
+  artifacthub.io/license: MIT
