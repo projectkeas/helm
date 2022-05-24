@@ -18,17 +18,32 @@ jobs:
           lint_regex="\[(.*)\] ([^ ]*): (.*)"
           for path in ./* ; do
             template=""
+            linted=""
             if [ -f "$path/test.values.yaml" ]; then
-                helm lint "$path" --values "$path/test.values.yaml"
-                
-                echo "Templating Chart '$path' with test.values.yaml"
+                linted=$(helm lint "$path" --values "$path/test.values.yaml")
                 template=$(helm template "$path" -n test --name-template=template-test -f "$path/test.values.yaml" --debug | tr '\n' ' \\n')
             else
-                helm lint "$path"
-                
-                echo "Templating Chart '$path'"
+                linted=$(helm lint "$path")
                 template=$(helm template "$path" -n test --name-template=template-test --debug | tr '\n' ' \\n')
             fi
+            echo "::group::$path"
+            while read linted ; do
+                if [[ $linted =~ $lint_regex ]]; then
+                    level="${BASH_REMATCH[1]}"
+                    file="${path}${BASH_REMATCH[2]}"
+                    message="${BASH_REMATCH[3]}"
+                    if [ $level = "ERROR" ]  
+                    then
+                        echo "::error file=${file}::${message}"
+                    elif [ $level = "WARNING" ]
+                    then
+                        echo "::warning file=${file}::${message}"
+                    else
+                        echo "::notice file=${file}::${message}"
+                    fi
+                fi
+                echo "$t" >&2
+              done
             while read template ; do
                 if [[ $template =~ $lint_regex ]]; then
                     level="${BASH_REMATCH[1]}"
@@ -46,4 +61,5 @@ jobs:
                 fi
                 echo "$t" >&2
               done
+            echo "::endgroup::"
           done
