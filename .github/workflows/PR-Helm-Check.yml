@@ -12,48 +12,38 @@ jobs:
       - name: Install Helm
         uses: azure/setup-helm@v1
 
-      - name: find location of test.values.yaml files
-        id: find-test-files
-        run: |
-          paths=$(
-          for d in charts/*/ ; do
-              [ ! -f "$d/test.values.yaml" ] && continue
-              jq -n --arg path "$d" '{ path: $path }'
-          done |
-          jq -s -c)
-          echo "::set-output name=test_locations::${paths}"
-
-      - name: Template and Lint Helm Charts
-        id: template-and-lint
-        shell: bash
-        env:
-          INPUT_TEST_LOCATIONS: ${{ steps.find-test-files.outputs.test_locations }}
+      - name: Lint & Template all charts
+        working-directory: charts
         run: |
           lint_regex="\[(.*)\] ([^ ]*): (.*)"
-
-          for row in $(echo "${INPUT_TEST_LOCATIONS}" | jq -r '.[] | @base64'); do
-              _jq() {
-                  echo ${row} | base64 --decode | jq -r ${1}
-                  }
-              path=$(_jq '.path')
-              template=$(helm template "$path" -f "$path/test.values.yaml" --debug | tr '\n' ' \\n')
-              echo "::notice file=${path}Chart.yaml,title=Template::${template}"
-              helm lint "$path" --values "$path/test.values.yaml" | while read t ; do
-                  if [[ $t =~ $lint_regex ]]
-                  then
-                      level="${BASH_REMATCH[1]}"
-                      file="${path}${BASH_REMATCH[2]}"
-                      message="${BASH_REMATCH[3]}"
-                      if [ $level = "ERROR" ]  
-                      then
-                          echo "::error file=${file}::${message}"
-                      elif [ $level = "WARNING" ]
-                      then
-                          echo "::warning file=${file}::${message}"
-                      else
-                          echo "::notice file=${file}::${message}"
-                      fi
-                  fi
-                  echo "$t" >&2
+          for path in ./* ; do
+            template=""
+            if [ -f "$path/test.values.yaml" ]; then
+                helm lint "$path" --values "$path/test.values.yaml"
+                
+                echo "Templating Chart '$path' with test.values.yaml"
+                template=$(helm template "$path" -n test --name-template=template-test -f "$path/test.values.yaml" --debug | tr '\n' ' \\n')
+            else
+                helm lint "$path"
+                
+                echo "Templating Chart '$path'"
+                template=$(helm template "$path" -n test --name-template=template-test --debug | tr '\n' ' \\n')
+            fi
+            while read template ; do
+                if [[ $template =~ $lint_regex ]]; then
+                    level="${BASH_REMATCH[1]}"
+                    file="${path}${BASH_REMATCH[2]}"
+                    message="${BASH_REMATCH[3]}"
+                    if [ $level = "ERROR" ]  
+                    then
+                        echo "::error file=${file}::${message}"
+                    elif [ $level = "WARNING" ]
+                    then
+                        echo "::warning file=${file}::${message}"
+                    else
+                        echo "::notice file=${file}::${message}"
+                    fi
+                fi
+                echo "$t" >&2
               done
           done
