@@ -25,14 +25,14 @@ jobs:
               linted=""
               if [ -f "$path/test.values.yaml" ]; then
                   linted=$(helm lint "$path" --values "$path/test.values.yaml")
-                  template=$(helm template "$path" -n test --name-template=template-test -f "$path/test.values.yaml" | tr '\n' ' \\n')
+                  template=$(helm template "$path" -n test --name-template=template-test -f "$path/test.values.yaml")
               else
                   linted=$(helm lint "$path")
-                  template=$(helm template "$path" -n test --name-template=template-test | tr '\n' ' \\n')
+                  template=$(helm template "$path" -n test --name-template=template-test)
               fi
 
-              while read linted ; do
-                  if [[ $linted =~ $lint_regex ]]; then
+              $linted | tr '\n' ' \\n' | while read t ; do
+                  if [[ $t =~ $lint_regex ]]; then
                       level="${BASH_REMATCH[1]}"
                       file="${path}${BASH_REMATCH[2]}"
                       message="${BASH_REMATCH[3]}"
@@ -49,8 +49,8 @@ jobs:
                   echo "$t" >&2
               done
               
-              while read template ; do
-                  if [[ $template =~ $lint_regex ]]; then
+              $linted | tr '\n' ' \\n' | while read t ; do
+                  if [[ $t =~ $lint_regex ]]; then
                       level="${BASH_REMATCH[1]}"
                       file="${path}${BASH_REMATCH[2]}"
                       message="${BASH_REMATCH[3]}"
