@@ -24,15 +24,15 @@ jobs:
               template=""
               linted=""
               if [ -f "$path/test.values.yaml" ]; then
-                  linted=$(helm lint "$path" --values "$path/test.values.yaml")
-                  template=$(helm template "$path" -n test --name-template=template-test -f "$path/test.values.yaml")
+                  linted=$(helm lint "$path" --values "$path/test.values.yaml" | tr '\n' ' \\n')
+                  template=$(helm template "$path" -n test --name-template=template-test -f "$path/test.values.yaml"  | tr '\n' ' \\n')
               else
-                  linted=$(helm lint "$path")
-                  template=$(helm template "$path" -n test --name-template=template-test)
+                  linted=$(helm lint "$path" | tr '\n' ' \\n')
+                  template=$(helm template "$path" -n test --name-template=template-test | tr '\n' ' \\n')
               fi
 
-              $linted | while read t ; do
-                  if [[ $t =~ $lint_regex ]]; then
+              while read linted ; do
+                  if [[ $linted =~ $lint_regex ]]; then
                       level="${BASH_REMATCH[1]}"
                       file="${path}${BASH_REMATCH[2]}"
                       message="${BASH_REMATCH[3]}"
@@ -46,11 +46,11 @@ jobs:
                           echo "::notice file=${file}::${message}"
                       fi
                   fi
-                  echo "$t" >&2
+                  echo "$linted" >&2
               done
               
-              $template | while read t ; do
-                  if [[ $t =~ $lint_regex ]]; then
+              while read template ; do
+                  if [[ $template =~ $lint_regex ]]; then
                       level="${BASH_REMATCH[1]}"
                       file="${path}${BASH_REMATCH[2]}"
                       message="${BASH_REMATCH[3]}"
@@ -64,7 +64,7 @@ jobs:
                           echo "::notice file=${file}::${message}"
                       fi
                   fi
-                  echo "$t" >&2
+                  echo "$template" >&2
               done
 
               echo "::endgroup::"
