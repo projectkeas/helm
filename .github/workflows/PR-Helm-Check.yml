@@ -31,7 +31,7 @@ jobs:
                   template=$(helm template "$path" -n test --name-template=template-test)
               fi
 
-              $linted | tr '\n' ' \\n' | while read t ; do
+              $linted | while read t ; do
                   if [[ $t =~ $lint_regex ]]; then
                       level="${BASH_REMATCH[1]}"
                       file="${path}${BASH_REMATCH[2]}"
@@ -49,7 +49,7 @@ jobs:
                   echo "$t" >&2
               done
               
-              $linted | tr '\n' ' \\n' | while read t ; do
+              $template | while read t ; do
                   if [[ $t =~ $lint_regex ]]; then
                       level="${BASH_REMATCH[1]}"
                       file="${path}${BASH_REMATCH[2]}"
