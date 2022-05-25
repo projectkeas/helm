@@ -1,0 +1,42 @@
+image:
+  repository: ghcr.io/projectkeas/connector-gitlab
+  pullPolicy: IfNotPresent
+  tag: 
+  pullSecrets: []
+
+service:
+  type: ClusterIP
+  port: 80
+
+serviceAccount:
+  name:
+  annotations: {}
+
+ingress:
+  enabled: true
+  className: ""
+  annotations: {}
+  hosts:
+    - paths:
+        - path: /connectors/gitlab
+          pathType: Prefix
+  tls: []
+
+pod:
+  annotations: {}
+  securityContext: {}
+
+resources: {}
+
+autoscaling:
+  enabled: true
+  minReplicas: 3
+  maxReplicas: 10
+  targetCPUUtilizationPercentage: 75
+  targetMemoryUtilizationPercentage: 75
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}

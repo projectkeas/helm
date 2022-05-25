@@ -3,3 +3,6 @@ docs/docs/
 docs/public/
 docs/resources/_gen/
 .hugo_build.lock
+
+# Helm files
+**/test.yaml

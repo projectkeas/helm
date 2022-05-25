@@ -1,0 +1,71 @@
+name: '[PR] Check Helm Charts'
+on:
+  pull_request:
+jobs:
+  check_helm:
+    name: Check Helm Charts
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Install Helm
+        uses: azure/setup-helm@v1
+
+      - name: Lint & Template all charts
+        working-directory: charts
+        run: |
+          lint_regex="\[(.*)\] ([^ ]*): (.*)"
+          for path in ./* ; do
+              [[ -f "$path/Chart.yaml" ]] || continue;
+
+              echo "::group::$path"
+
+              template=""
+              linted=""
+              if [ -f "$path/test.values.yaml" ]; then
+                  linted=$(helm lint "$path" --values "$path/test.values.yaml" | tr '\n' ' \\n')
+                  template=$(helm template "$path" -n test --name-template=template-test -f "$path/test.values.yaml"  | tr '\n' ' \\n')
+              else
+                  linted=$(helm lint "$path" | tr '\n' ' \\n')
+                  template=$(helm template "$path" -n test --name-template=template-test | tr '\n' ' \\n')
+              fi
+
+              while read linted ; do
+                  if [[ $linted =~ $lint_regex ]]; then
+                      level="${BASH_REMATCH[1]}"
+                      file="${path}${BASH_REMATCH[2]}"
+                      message="${BASH_REMATCH[3]}"
+                      if [ $level = "ERROR" ]  
+                      then
+                          echo "::error file=${file}::${message}"
+                      elif [ $level = "WARNING" ]
+                      then
+                          echo "::warning file=${file}::${message}"
+                      else
+                          echo "::notice file=${file}::${message}"
+                      fi
+                  fi
+                  echo "$linted" >&2
+              done
+              
+              while read template ; do
+                  if [[ $template =~ $lint_regex ]]; then
+                      level="${BASH_REMATCH[1]}"
+                      file="${path}${BASH_REMATCH[2]}"
+                      message="${BASH_REMATCH[3]}"
+                      if [ $level = "ERROR" ]  
+                      then
+                          echo "::error file=${file}::${message}"
+                      elif [ $level = "WARNING" ]
+                      then
+                          echo "::warning file=${file}::${message}"
+                      else
+                          echo "::notice file=${file}::${message}"
+                      fi
+                  fi
+                  echo "$template" >&2
+              done
+
+              echo "::endgroup::"
+          done

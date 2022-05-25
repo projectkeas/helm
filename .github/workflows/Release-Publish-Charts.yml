@@ -1,4 +1,4 @@
-name: Release Helm Charts
+name: '[Release] Publish'
 
 # Do not change this - otherwise pushes will fail with concurrent runs
 concurrency: release-helm
@@ -22,6 +22,7 @@ jobs:
         with:
           path: 'src'
           fetch-depth: 0
+
       - name: Checkout
         uses: actions/checkout@v3
         with:
@@ -29,9 +30,9 @@ jobs:
           ref: 'gh-pages'
           fetch-depth: 0
 
-      # Dependency installation
       - name: Install Helm
         uses: azure/setup-helm@v1
+
       - name: Setup Hugo
         uses: peaceiris/actions-hugo@v2
         with:
