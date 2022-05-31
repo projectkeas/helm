@@ -1,0 +1,11 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: {{ include "helmchart.fullname" . }}-role
+rules:
+  - apiGroups: [""]
+    resources: ["configmaps", "secrets"]
+    verbs:     ["get", "watch", "list"]
+  - apiGroups: ["keas.io"]
+    resources: ["ingestionpolicies","eventtypes"]
+    verbs:     ["get", "watch", "list"]
