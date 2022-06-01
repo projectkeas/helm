@@ -6,4 +6,4 @@ metadata:
     {{- include "helmchart.labels" . | nindent 4 }}
 data:
   nats.port: '{{ .Values.nats.nats.client.port }}'
-  nats.address: '{{ .Values.nats.nameOverride }}'
+  nats.address: '{{ .Release.Name }}-{{ .Values.nats.nameOverride }}.{{ .Release.Namespace }}.svc.cluster.local'

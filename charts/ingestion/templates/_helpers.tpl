@@ -32,7 +32,7 @@ app.kubernetes.io/version: {{ .Chart.AppVersion }}
     If release name contains chart name it will be used as a full name.
 */}}
 {{- define "helmchart.fullname" -}}
-{{ .Chart.Name}}-{{ .Release.Name }}
+{{ .Release.Name }}-{{ .Chart.Name}}
 {{- end }}
 
 
@@ -40,5 +40,5 @@ app.kubernetes.io/version: {{ .Chart.AppVersion }}
     Service account name helper
 */}}
 {{- define "helmchart.serviceAccountName" -}}
-{{ default .Chart.Name .Values.serviceAccount.name }}
+{{ default .Chart.Name .Values.serviceAccount.name }}-sa
 {{- end }}
