@@ -1,0 +1,6 @@
+serviceAccount:
+  name: keas-ingestion
+
+autoscaling:
+  enabled: true
+  minReplicas: 1
