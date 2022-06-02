@@ -1,3 +1,7 @@
-baseURL = 'http://example.org/'
+baseURL = 'https://helm.keas.io/'
 languageCode = 'en-us'
 title = 'Project Keas - Helm Charts'
+enableRobotsTXT = true
+
+[minify]
+  minifyOutput = true
