@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: connector-spacelift-cm
+  labels: 
+    {{- include "helmchart.labels" . | nindent 4 }}
+data:
+  ingestion.uri: 'http://keas-ingestion.{{ .Release.Namespace }}.svc.cluster.local/ingest'
+  log.level: 'debug'
