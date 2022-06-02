@@ -32,7 +32,7 @@ app.kubernetes.io/version: {{ .Chart.AppVersion }}
     If release name contains chart name it will be used as a full name.
 */}}
 {{- define "helmchart.fullname" -}}
-{{ .Release.Name }}-{{ .Chart.Name}}
+{{ .Release.Name }}-{{ .Chart.Name }}
 {{- end }}
 
 
