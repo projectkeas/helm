@@ -1,6 +1,4 @@
-serviceAccount:
-  name: keas-ingestion
+replicaCount: 1
 
 autoscaling:
-  enabled: true
-  minReplicas: 1
+  enabled: false

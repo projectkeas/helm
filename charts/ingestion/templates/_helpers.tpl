@@ -9,7 +9,7 @@
     Common labels
 */}}
 {{- define "helmchart.labels" -}}
-app.kubernetes.io/component: keas-ingestion
+app.kubernetes.io/component: keas-{{ .Chart.Name }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 app.kubernetes.io/managed-by: {{ .Release.Service }}
 app.kubernetes.io/name: {{ .Chart.Name }}
