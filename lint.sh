@@ -1,8 +1,8 @@
 #!/bin/sh
 
 for path in charts/*/ ; do
-    echo "Removing old dependencies..."
-    rm -rf "${path}charts"
+    #echo "Removing old dependencies..."
+    #rm -rf "${path}charts"
     
     echo "Building dependencies..."
     helm dep up $path

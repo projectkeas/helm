@@ -34,6 +34,10 @@ tolerations: []
 
 affinity: {}
 
+eventTypes:
+  spacelift:
+    audit: true
+
 nats:
   nameOverride: 'ingestion-nats'
   nats:
