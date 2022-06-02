@@ -1,5 +1,5 @@
 image:
-  repository: ghcr.io/projectkeas/ingestion
+  repository: ghcr.io/projectkeas/connector-spacelift
   pullPolicy: IfNotPresent
   tag: 
   pullSecrets: []
@@ -33,24 +33,3 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
-
-eventTypes:
-  spacelift:
-    audit: true
-
-nats:
-  nameOverride: 'ingestion-nats'
-  nats:
-    image: nats:2.8.4-alpine
-    customConfigSecret:
-      name: ingestion-nats-config
-    jetstream:
-      enabled: true
-  cluster:
-    enabled: true
-    noAdvertise: true
-    extraRoutes: []
-  natsbox:
-    enabled: false
-  exporter:
-    enabled: false

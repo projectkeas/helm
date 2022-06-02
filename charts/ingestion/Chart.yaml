@@ -12,8 +12,8 @@ sources:
   - https://github.com/projectkeas/crds
   - https://github.com/projectkeas/helm/tree/main/charts/ingestion
 deprecated: false
-version: 0.1.3
-appVersion: "0.1.3"
+version: 0.1.5
+appVersion: "0.1.5"
 annotations:
   artifacthub.io/prerelease: 'true'
   artifacthub.io/license: MIT

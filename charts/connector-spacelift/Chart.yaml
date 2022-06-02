@@ -1,0 +1,19 @@
+apiVersion: v2
+name: connector-spacelift
+description: Deploys the Spacelift Connector for Keas
+type: application
+kubeVersion: '>= 1.20.0'
+keywords:
+  - keas
+  - connector
+  - spacelift
+home: https://github.com/projectkeas/connector-spacelift
+sources:
+  - https://github.com/projectkeas/connector-spacelift
+  - https://github.com/projectkeas/helm/tree/main/charts/connector-spacelift
+deprecated: false
+version: 0.1.1
+appVersion: "0.1.1"
+annotations:
+  artifacthub.io/prerelease: 'true'
+  artifacthub.io/license: MIT
