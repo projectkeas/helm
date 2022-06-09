@@ -16,17 +16,13 @@ spec:
   scope: Namespaced
   versions:
   - additionalPrinterColumns:
-    - description: The name of the type that will be accepted by the ingestion engine
-      jsonPath: .spec.type
-      name: Event Type
+    - description: The schema uri that's mapped to the dataschema property of cloudevents
+      jsonPath: .spec.schemaUri
+      name: URI
       type: string
     - description: The description of the event type and/or schema
       jsonPath: .spec.description
       name: Description
-      type: string
-    - description: The version of the event type that's being stored
-      jsonPath: .spec.version
-      name: Version
       type: string
     name: v1alpha1
     schema:
@@ -51,24 +47,12 @@ spec:
                 type: string
               schema:
                 type: string
-              sources:
-                items:
-                  type: string
-                type: array
-              subTypes:
-                items:
-                  type: string
-                type: array
-              type:
-                pattern: ^[A-z\-]{3,63}$
-                type: string
-              version:
-                pattern: ^([0-9]{1,4}){1}\.([0-9]{1,4}){1}\.([0-9]{1,4}){1}$
+              schemaUri:
+                format: uri
                 type: string
             required:
             - schema
-            - type
-            - version
+            - schemaUri
             type: object
         required:
         - spec

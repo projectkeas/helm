@@ -24,10 +24,6 @@ spec:
       jsonPath: .spec.defaults.allow
       name: Default Allow
       type: boolean
-    - description: The default value for ttl
-      jsonPath: .spec.defaults.ttl
-      name: Default TTL
-      type: integer
     name: v1alpha1
     schema:
       openAPIV3Schema:
@@ -50,8 +46,6 @@ spec:
                 properties:
                   allow:
                     type: boolean
-                  ttl:
-                    type: integer
                 type: object
               description:
                 type: string
