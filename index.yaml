@@ -23,6 +23,28 @@ entries:
     urls:
     - https://raw.githubusercontent.com/projectkeas/helm/gh-pages/connector-github-0.1.1.tgz
     version: 0.1.1
+  - annotations:
+      artifacthub.io/license: MIT
+      artifacthub.io/prerelease: "true"
+    apiVersion: v2
+    appVersion: 0.1.0
+    created: "2022-06-10T10:03:17.615603269Z"
+    description: Deploys the Github Connector for Keas
+    digest: 1cebf5f2e3e6577fcf59889ca934339fe8f85ebd7161644776c6a36cfd27b392
+    home: https://github.com/projectkeas/connector-github
+    keywords:
+    - keas
+    - connector
+    - github
+    kubeVersion: '>= 1.20.0'
+    name: connector-github
+    sources:
+    - https://github.com/projectkeas/connector-github
+    - https://github.com/projectkeas/helm/tree/main/charts/connector-github
+    type: application
+    urls:
+    - https://raw.githubusercontent.com/projectkeas/helm/gh-pages/connector-github-0.1.0.tgz
+    version: 0.1.0
   connector-spacelift:
   - annotations:
       artifacthub.io/license: MIT
@@ -125,4 +147,4 @@ entries:
     urls:
     - https://raw.githubusercontent.com/projectkeas/helm/gh-pages/ingestion-0.1.3.tgz
     version: 0.1.3
-generated: "2022-06-10T09:34:18.379606632Z"
+generated: "2022-06-10T10:03:17.613938958Z"
