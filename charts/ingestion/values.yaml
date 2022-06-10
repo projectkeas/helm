@@ -46,6 +46,10 @@ nats:
       name: ingestion-nats-config
     jetstream:
       enabled: true
+      fileStorage:
+        enabled: true
+        size: 10Gi
+        storageDirectory: /data/
   cluster:
     enabled: true
     noAdvertise: true

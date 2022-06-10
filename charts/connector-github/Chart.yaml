@@ -1,0 +1,19 @@
+apiVersion: v2
+name: connector-github
+description: Deploys the Github Connector for Keas
+type: application
+kubeVersion: '>= 1.20.0'
+keywords:
+  - keas
+  - connector
+  - github
+home: https://github.com/projectkeas/connector-github
+sources:
+  - https://github.com/projectkeas/connector-github
+  - https://github.com/projectkeas/helm/tree/main/charts/connector-github
+deprecated: false
+version: 0.1.1
+appVersion: "0.1.1"
+annotations:
+  artifacthub.io/prerelease: 'true'
+  artifacthub.io/license: MIT
