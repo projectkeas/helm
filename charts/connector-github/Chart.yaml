@@ -12,8 +12,8 @@ sources:
   - https://github.com/projectkeas/connector-github
   - https://github.com/projectkeas/helm/tree/main/charts/connector-github
 deprecated: false
-version: 0.1.1
-appVersion: "0.1.1"
+version: 0.1.0
+appVersion: "0.1.0"
 annotations:
   artifacthub.io/prerelease: 'true'
   artifacthub.io/license: MIT
