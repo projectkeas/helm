@@ -1,0 +1,35 @@
+image:
+  repository: ghcr.io/projectkeas/connector-github
+  pullPolicy: IfNotPresent
+  tag: 
+  pullSecrets: []
+
+service:
+  type: ClusterIP
+  port: 80
+
+serviceAccount:
+  name:
+  annotations: {}
+
+configuration:
+  createSecret: true
+
+pod:
+  annotations: {}
+  securityContext: {}
+
+resources: {}
+
+autoscaling:
+  enabled: true
+  minReplicas: 3
+  maxReplicas: 10
+  targetCPUUtilizationPercentage: 75
+  targetMemoryUtilizationPercentage: 75
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
