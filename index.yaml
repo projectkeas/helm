@@ -5,6 +5,28 @@ entries:
       artifacthub.io/license: MIT
       artifacthub.io/prerelease: "true"
     apiVersion: v2
+    appVersion: 0.2.0
+    created: "2022-06-15T23:08:59.786789369Z"
+    description: Deploys the Github Connector for Keas
+    digest: 905d8ec5bf446e310307054483b59c267ba8bdb70d8041afe68678816fbe9102
+    home: https://github.com/projectkeas/connector-github
+    keywords:
+    - keas
+    - connector
+    - github
+    kubeVersion: '>= 1.20.0'
+    name: connector-github
+    sources:
+    - https://github.com/projectkeas/connector-github
+    - https://github.com/projectkeas/helm/tree/main/charts/connector-github
+    type: application
+    urls:
+    - https://raw.githubusercontent.com/projectkeas/helm/gh-pages/connector-github-0.2.0.tgz
+    version: 0.2.0
+  - annotations:
+      artifacthub.io/license: MIT
+      artifacthub.io/prerelease: "true"
+    apiVersion: v2
     appVersion: 0.1.1
     created: "2022-06-10T09:34:18.380565567Z"
     description: Deploys the Github Connector for Keas
@@ -50,6 +72,28 @@ entries:
       artifacthub.io/license: MIT
       artifacthub.io/prerelease: "true"
     apiVersion: v2
+    appVersion: 0.2.0
+    created: "2022-06-15T23:08:59.787276565Z"
+    description: Deploys the Spacelift Connector for Keas
+    digest: dccdba68db1393ad1b0d80db25bddb4760d40f35801fbe5b2a3ea1e0d1079ece
+    home: https://github.com/projectkeas/connector-spacelift
+    keywords:
+    - keas
+    - connector
+    - spacelift
+    kubeVersion: '>= 1.20.0'
+    name: connector-spacelift
+    sources:
+    - https://github.com/projectkeas/connector-spacelift
+    - https://github.com/projectkeas/helm/tree/main/charts/connector-spacelift
+    type: application
+    urls:
+    - https://raw.githubusercontent.com/projectkeas/helm/gh-pages/connector-spacelift-0.2.0.tgz
+    version: 0.2.0
+  - annotations:
+      artifacthub.io/license: MIT
+      artifacthub.io/prerelease: "true"
+    apiVersion: v2
     appVersion: 0.1.1
     created: "2022-06-02T15:47:04.254145736Z"
     description: Deploys the Spacelift Connector for Keas
@@ -69,6 +113,32 @@ entries:
     - https://raw.githubusercontent.com/projectkeas/helm/gh-pages/connector-spacelift-0.1.1.tgz
     version: 0.1.1
   ingestion:
+  - annotations:
+      artifacthub.io/license: MIT
+      artifacthub.io/prerelease: "true"
+    apiVersion: v2
+    appVersion: 0.2.2
+    created: "2022-06-15T23:08:59.789642843Z"
+    dependencies:
+    - name: nats
+      repository: https://nats-io.github.io/k8s/helm/charts/
+      version: 0.17.0
+    description: Deploys the Ingestion API for Project Keas
+    digest: 761ddddb15a1ed2d6d49ce199151dd0529abcb76cebe00ca36d45ecc181d60dc
+    home: https://github.com/projectkeas/ingestion
+    keywords:
+    - keas
+    - ingestion
+    kubeVersion: '>= 1.20.0'
+    name: ingestion
+    sources:
+    - https://github.com/projectkeas/ingestion
+    - https://github.com/projectkeas/crds
+    - https://github.com/projectkeas/helm/tree/main/charts/ingestion
+    type: application
+    urls:
+    - https://raw.githubusercontent.com/projectkeas/helm/gh-pages/ingestion-0.2.2.tgz
+    version: 0.2.2
   - annotations:
       artifacthub.io/license: MIT
       artifacthub.io/prerelease: "true"
@@ -173,4 +243,4 @@ entries:
     urls:
     - https://raw.githubusercontent.com/projectkeas/helm/gh-pages/ingestion-0.1.3.tgz
     version: 0.1.3
-generated: "2022-06-10T10:06:53.177353078Z"
+generated: "2022-06-15T23:08:59.785824478Z"
