@@ -12,8 +12,8 @@ sources:
   - https://github.com/projectkeas/connector-spacelift
   - https://github.com/projectkeas/helm/tree/main/charts/connector-spacelift
 deprecated: false
-version: 0.1.1
-appVersion: "0.1.1"
+version: 0.2.0
+appVersion: "0.2.0"
 annotations:
   artifacthub.io/prerelease: 'true'
   artifacthub.io/license: MIT
