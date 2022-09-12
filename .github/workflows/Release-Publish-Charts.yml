@@ -33,7 +33,7 @@ jobs:
 
       # Dependency installation
       - name: Install Helm
-        uses: azure/setup-helm@v2
+        uses: azure/setup-helm@v3
       - name: Setup Hugo
         uses: peaceiris/actions-hugo@v2
         with:
